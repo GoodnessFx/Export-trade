@@ -78,7 +78,7 @@ const IMG = {
   meeting: "https://images.unsplash.com/photo-1650499310282-cda4d957f5be?w=1200&h=800&fit=crop&auto=format",
   handshake: "https://images.unsplash.com/photo-1638262052640-82e94d64664a?w=1000&h=700&fit=crop&auto=format",
   businessMeeting2: "https://images.unsplash.com/photo-1672380135241-c024f7fbfa13?w=900&h=600&fit=crop&auto=format",
-  logo: "/LOGO.jpeg",
+  logo: "/export-trade-logo.png",
   ceoPortrait: "/CEO.jpeg",
   ceoTeaching: "/CEO TEACHING.jpeg",
   ceoConference: "/CEO AT TRAINING CONFERENCE.jpeg",
@@ -277,7 +277,7 @@ function BrandLogo({ variant = "nav" }: { variant?: "nav" | "footer" }) {
       <img
         src={IMG.logo}
         alt="Export Trade Africa"
-        className={isNav ? "h-7 sm:h-8 w-auto mix-blend-screen" : "h-10 sm:h-11 w-auto mix-blend-screen"}
+        className={isNav ? "h-10 sm:h-12 w-auto" : "h-14 sm:h-16 w-auto"}
       />
       <span className={`font-display font-bold tracking-tight ${isNav ? "text-lg text-white" : "text-xl text-white"}`}>
         Export Trade Africa
@@ -845,7 +845,7 @@ function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
                 </p>
               </div>
             </div>
-            <div className="rounded overflow-hidden bg-white border border-[#E8E9EB] aspect-[4/3] flex items-center justify-center p-12">
+            <div className="rounded overflow-hidden bg-white border border-[#E8E9EB] aspect-[4/3] flex items-center justify-center p-6">
               <img
                 src={IMG.logo}
                 alt="Hamdan Integrated Services logo"
