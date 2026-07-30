@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ArrowRight,
   Menu,
@@ -22,6 +22,10 @@ import {
   Truck,
   Star,
   Search,
+  Landmark,
+  FileSignature,
+  GraduationCap,
+  BookOpen,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -31,6 +35,7 @@ type Page =
   | "products"
   | "product-detail"
   | "services"
+  | "mentorship-training"
   | "quote"
   | "supplier"
   | "compliance"
@@ -49,6 +54,22 @@ type ProductType = {
   specs: string;
 };
 
+type Testimonial = {
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+  country: string;
+};
+
+type TrainingMediaItem = {
+  type: "image" | "video";
+  src: string;
+  alt: string;
+  title: string;
+  poster?: string;
+};
+
 // ─── Images ──────────────────────────────────────────────────────────────────
 const IMG = {
   hero: "https://images.unsplash.com/photo-1713388259485-5fb8454d16cf?w=1800&h=900&fit=crop&auto=format",
@@ -63,6 +84,14 @@ const IMG = {
   meeting: "https://images.unsplash.com/photo-1650499310282-cda4d957f5be?w=1200&h=800&fit=crop&auto=format",
   handshake: "https://images.unsplash.com/photo-1638262052640-82e94d64664a?w=1000&h=700&fit=crop&auto=format",
   businessMeeting2: "https://images.unsplash.com/photo-1672380135241-c024f7fbfa13?w=900&h=600&fit=crop&auto=format",
+  logo: "/LOGO.jpeg",
+  ceoPortrait: "/CEO.jpeg",
+  ceoTeaching: "/CEO TEACHING.jpeg",
+  ceoConference: "/CEO AT TRAINING CONFERENCE.jpeg",
+  ceoTraining1: "/CEO TRAINING.jpeg",
+  ceoTraining2: "/CEO TRAINING 02.jpeg",
+  ceoTraining3: "/CEO TRAINING 03.jpeg",
+  ceoTraining4: "/CEO TRAINING 04.jpeg",
 };
 
 // ─── Product Data ─────────────────────────────────────────────────────────────
@@ -127,8 +156,51 @@ const NAV_LINKS: { label: string; page: Page }[] = [
   { label: "About", page: "about" },
   { label: "Products", page: "products" },
   { label: "Services", page: "services" },
+  { label: "Training", page: "mentorship-training" },
   { label: "Trust & Compliance", page: "compliance" },
   { label: "Contact", page: "contact" },
+];
+
+// TODO: Replace with approved real client testimonials before publishing this section.
+const CLIENT_TESTIMONIALS: Testimonial[] = [];
+
+const TRAINING_MEDIA: TrainingMediaItem[] = [
+  {
+    type: "image",
+    src: IMG.ceoTeaching,
+    alt: "CEO delivering an export trade training session",
+    title: "Live practical trade session",
+  },
+  {
+    type: "image",
+    src: IMG.ceoConference,
+    alt: "CEO presenting trade materials during a mentorship conference",
+    title: "Conference mentorship session",
+  },
+  {
+    type: "image",
+    src: IMG.ceoTraining1,
+    alt: "CEO teaching with export product examples on screen",
+    title: "Commodity export walkthrough",
+  },
+  {
+    type: "image",
+    src: IMG.ceoTraining2,
+    alt: "CEO speaking during a hands-on training class",
+    title: "In-room coaching",
+  },
+  {
+    type: "image",
+    src: IMG.ceoTraining3,
+    alt: "CEO leading a practical mentoring session",
+    title: "Mentorship in action",
+  },
+  {
+    type: "image",
+    src: IMG.ceoTraining4,
+    alt: "CEO addressing participants during an international trade training",
+    title: "Structured team training",
+  },
 ];
 
 // ─── Shared: Field ─────────────────────────────────────────────────────────────
@@ -200,6 +272,27 @@ function PageHero({
   );
 }
 
+function BrandLogo({ variant = "nav" }: { variant?: "nav" | "footer" }) {
+  const isNav = variant === "nav";
+
+  return (
+    <div
+      className={`inline-flex items-center gap-3 rounded-sm ${
+        isNav ? "py-1.5" : "py-2"
+      }`}
+    >
+      <img
+        src={IMG.logo}
+        alt="Export Trade Africa"
+        className={isNav ? "h-7 sm:h-8 w-auto mix-blend-screen" : "h-10 sm:h-11 w-auto mix-blend-screen"}
+      />
+      <span className={`font-display font-bold tracking-tight ${isNav ? "text-lg text-white" : "text-xl text-white"}`}>
+        Export Trade Africa
+      </span>
+    </div>
+  );
+}
+
 // ─── Nav ──────────────────────────────────────────────────────────────────────
 function Nav({
   currentPage,
@@ -218,22 +311,18 @@ function Nav({
             navigate("home");
             setOpen(false);
           }}
-          className="flex flex-col leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A] rounded-sm"
+          className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A] rounded-sm"
+          aria-label="Go to home page"
         >
-          <span className="font-display text-white text-lg font-bold tracking-tight uppercase leading-tight">
-            Export Trade
-          </span>
-          <span className="text-[#C97B2A] text-[10px] font-semibold tracking-[0.22em] uppercase">
-            Africa
-          </span>
+          <BrandLogo variant="nav" />
         </button>
 
-        <nav className="hidden lg:flex items-center gap-5">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-5">
           {NAV_LINKS.map((link) => (
             <button
               key={link.page}
               onClick={() => navigate(link.page)}
-              className={`text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A] rounded-sm px-1 py-0.5 ${
+              className={`text-[13px] xl:text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A] rounded-sm px-1 py-0.5 ${
                 currentPage === link.page
                   ? "text-[#C97B2A]"
                   : "text-white/70 hover:text-white"
@@ -303,12 +392,13 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
             <div className="mb-4">
-              <div className="font-display text-xl font-bold tracking-tight uppercase leading-tight">
-                Export Trade
-              </div>
-              <div className="text-[#C97B2A] text-[10px] font-semibold tracking-[0.22em] uppercase">
-                Africa
-              </div>
+              <button
+                onClick={() => navigate("home")}
+                className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A] rounded-sm"
+                aria-label="Go to home page"
+              >
+                <BrandLogo variant="footer" />
+              </button>
             </div>
             <p className="text-white/55 text-sm leading-relaxed mb-5">
               Import, export and trading company based in Lekki, Lagos, Nigeria.
@@ -334,6 +424,7 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
                 { label: "About Us", page: "about" as Page },
                 { label: "Products", page: "products" as Page },
                 { label: "Services", page: "services" as Page },
+                { label: "Mentorship & Training", page: "mentorship-training" as Page },
                 { label: "Trust & Compliance", page: "compliance" as Page },
                 { label: "Contact", page: "contact" as Page },
               ].map((link) => (
@@ -358,6 +449,10 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
                 "Import Services",
                 "Sourcing & Procurement",
                 "Warehousing & Logistics",
+                "Export Finance",
+                "International Contracts",
+                "Mentorship",
+                "Training",
               ].map((s) => (
                 <button
                   key={s}
@@ -426,6 +521,12 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
           </p>
           <div className="flex gap-4">
             <button
+              onClick={() => navigate("mentorship-training")}
+              className="text-white/25 hover:text-white/55 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A] rounded-sm"
+            >
+              Mentorship & Training
+            </button>
+            <button
               onClick={() => navigate("compliance")}
               className="text-white/25 hover:text-white/55 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A] rounded-sm"
             >
@@ -446,17 +547,53 @@ function Footer({ navigate }: { navigate: (p: Page) => void }) {
 
 // ─── HOME PAGE ────────────────────────────────────────────────────────────────
 function HomePage({ navigate }: { navigate: (p: Page, product?: ProductType) => void }) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    { type: "image", src: IMG.hero, alt: "Large cargo vessel loaded with colourful shipping containers at port" },
+    { type: "video", src: "/PRODUCT 23 VIDEO.mp4" },
+    { type: "image", src: IMG.cargoShip2, alt: "Cargo ship at sea" },
+    { type: "video", src: "/PRODUCT 24 VIDEO.mp4" }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
   return (
     <main>
       {/* Hero */}
       <section className="relative h-[92vh] min-h-[560px] max-h-[900px] flex items-end overflow-hidden bg-[#0A1628]">
-        <img
-          src={IMG.hero}
-          alt="Large cargo vessel loaded with colourful shipping containers at port"
-          className="absolute inset-0 w-full h-full object-cover opacity-55"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/45 to-transparent" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 w-full">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? "opacity-100 z-0" : "opacity-0 z-0"
+            }`}
+          >
+            {slide.type === "image" ? (
+              <img
+                src={slide.src}
+                alt={slide.alt || ""}
+                className="w-full h-full object-cover opacity-55"
+              />
+            ) : (
+              <video
+                src={slide.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover opacity-55"
+              />
+            )}
+          </div>
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/45 to-transparent z-10" />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 w-full">
           <div className="max-w-2xl">
             <SectionLabel text="Lekki · Lagos · Nigeria" />
             <h1 className="font-display text-white text-5xl sm:text-6xl lg:text-[5rem] font-bold leading-[1.02] mb-6 tracking-tight">
@@ -658,44 +795,46 @@ function HomePage({ navigate }: { navigate: (p: Page, product?: ProductType) => 
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                quote:
-                  "Export Trade Africa handled our first shipment of sesame from Nigeria with complete professionalism. Every document was correct on first submission, and the product grading matched the sample exactly. We have since placed three more orders.",
-                name: "David Chen",
-                role: "Procurement Director",
-                company: "Sino-Africa Trade Co.",
-                country: "China",
-              },
-              {
-                quote:
-                  "We needed a supplier who could deliver consistent quality with proper certification. ETA met that standard from the first order. Communication is prompt and the documentation is exactly what our EU import inspectors require.",
-                name: "Markus Werner",
-                role: "Operations Manager",
-                company: "EuroCommodities GmbH",
-                country: "Germany",
-              },
-            ].map((t) => (
-              <div
-                key={t.name}
-                className="bg-[#F2F3F6] rounded p-8 border border-[#E8E9EB]"
-              >
+            {CLIENT_TESTIMONIALS.length > 0 ? (
+              CLIENT_TESTIMONIALS.map((t) => (
+                <div
+                  key={`${t.name}-${t.company}`}
+                  className="bg-[#F2F3F6] rounded p-8 border border-[#E8E9EB]"
+                >
+                  <div className="flex gap-0.5 mb-5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={13} className="text-[#C97B2A] fill-[#C97B2A]" />
+                    ))}
+                  </div>
+                  <blockquote className="text-[#0A1628] text-base leading-relaxed mb-6 italic">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <div>
+                    <div className="font-semibold text-[#0A1628] text-sm">{t.name}</div>
+                    <div className="text-[#64748B] text-xs mt-0.5">
+                      {t.role}, {t.company} &middot; {t.country}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="md:col-span-2 bg-[#F2F3F6] rounded p-8 sm:p-10 border border-[#E8E9EB]">
                 <div className="flex gap-0.5 mb-5">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} size={13} className="text-[#C97B2A] fill-[#C97B2A]" />
                   ))}
                 </div>
-                <blockquote className="text-[#0A1628] text-base leading-relaxed mb-6 italic">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <div>
-                  <div className="font-semibold text-[#0A1628] text-sm">{t.name}</div>
-                  <div className="text-[#64748B] text-xs mt-0.5">
-                    {t.role}, {t.company} &middot; {t.country}
-                  </div>
-                </div>
+                {/* TODO: Render approved real client testimonials here once provided. */}
+                <p className="text-[#0A1628] text-base leading-relaxed mb-3">
+                  Real client testimonials will be published here once approved quotes are
+                  supplied.
+                </p>
+                <p className="text-[#64748B] text-sm leading-relaxed">
+                  This section intentionally avoids placeholder names, companies, or fabricated
+                  endorsements.
+                </p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -727,10 +866,10 @@ function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
   return (
     <main className="pt-16">
       <PageHero
-        label="About Us"
+        label="Who We Are"
         title="Who We Are"
-        image={IMG.meeting}
-        imageAlt="Export Trade Africa leadership team in a business meeting"
+        image={IMG.ceoPortrait}
+        imageAlt="Export Trade Africa leadership team"
       />
 
       {/* Story */}
@@ -1115,6 +1254,60 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
       image: IMG.cargoShip2,
       imageAlt: "Freight logistics and port operations",
     },
+    {
+      icon: <Landmark size={26} />,
+      title: "Export Finance",
+      who: "For exporters and buyers who need financing structures for cross-border trade.",
+      desc: "We support trade finance facilitation for export and import transactions, including letters of credit coordination, payment structuring, and practical guidance on financing documentation required to move deals to settlement.",
+      steps: [
+        "Financing needs assessment based on transaction size, payment terms, and shipment timeline",
+        "Preparation and review of supporting trade documents for the proposed financing structure",
+        "Facilitation with financial partners on letters of credit, collections, and structured payment options",
+        "Disbursement coordination, shipment milestone tracking, and settlement follow-through",
+      ],
+      image: IMG.handshake,
+      imageAlt: "Trade finance discussion for cross-border export transactions",
+    },
+    {
+      icon: <FileSignature size={26} />,
+      title: "International Contracts",
+      who: "For businesses that need properly structured trade agreements.",
+      desc: "We help draft and review international sale and purchase agreements, align commercial terms with the correct Incoterms, and clarify dispute-resolution clauses so both sides understand obligations before goods move.",
+      steps: [
+        "Contract needs review covering transaction scope, product terms, jurisdiction, and risk points",
+        "Drafting or negotiation support for sales contracts, purchase contracts, and addenda",
+        "Alignment of commercial terms, Incoterms, delivery obligations, and payment clauses",
+        "Execution support so the final agreement is ready for signature and operational handover",
+      ],
+      image: IMG.businessMeeting2,
+      imageAlt: "International trade contract discussion between business partners",
+    },
+    {
+      icon: <GraduationCap size={26} />,
+      title: "Mentorship",
+      who: "For entrepreneurs and business owners entering export/import trade.",
+      desc: "Our mentorship offering provides hands-on coaching for founders and operators building an export or import business, drawing directly from our own practical trade experience across sourcing, documentation, pricing, and fulfilment.",
+      steps: [
+        "Intake and goals session to understand the mentee's market, products, and current stage",
+        "Structured mentorship sessions focused on practical trade execution and decision-making",
+        "Ongoing check-ins to review progress, unblock challenges, and refine the business approach",
+      ],
+      image: IMG.ceoConference,
+      imageAlt: "CEO leading a mentorship session on trade operations",
+    },
+    {
+      icon: <BookOpen size={26} />,
+      title: "Training",
+      who: "For teams and individuals who want practical trade skills.",
+      desc: "We run structured training programs covering export and import processes, documentation requirements, operational workflows, and compliance expectations so participants can execute trade transactions with confidence.",
+      steps: [
+        "Training needs assessment based on participant roles, experience level, and learning goals",
+        "Training delivery through practical sessions, case examples, and guided documentation reviews",
+        "Certification or completion wrap-up with clear next steps for applying the training on live transactions",
+      ],
+      image: IMG.ceoTraining1,
+      imageAlt: "CEO delivering trade skills training to participants",
+    },
   ];
 
   return (
@@ -1184,6 +1377,164 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
             </div>
           </div>
         ))}
+      </section>
+    </main>
+  );
+}
+
+// ─── MENTORSHIP & TRAINING PAGE ───────────────────────────────────────────────
+function MentorshipTrainingPage({ navigate }: { navigate: (p: Page) => void }) {
+  return (
+    <main className="pt-16">
+      <PageHero
+        label="CEO Training"
+        title="Mentorship & Training"
+        image={IMG.ceoTeaching}
+        imageAlt="CEO leading a practical export trade training session"
+      />
+
+      <section className="bg-white py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 lg:gap-14 items-start">
+            <div>
+              <SectionLabel text="Program Overview" />
+              <h2 className="font-display text-[#0A1628] text-3xl sm:text-4xl font-bold mb-5">
+                Practical guidance for founders, teams, and new trade operators
+              </h2>
+              <p className="text-[#64748B] text-base leading-relaxed mb-4 max-w-3xl">
+                Our mentorship and training sessions are built for people who want to understand
+                how cross-border trade works in practice, not just in theory. The program covers
+                sourcing, export and import workflows, documentation, pricing logic, compliance,
+                and the operational decisions that shape successful transactions.
+              </p>
+              <p className="text-[#64748B] text-base leading-relaxed max-w-3xl">
+                Sessions can be tailored for early-stage entrepreneurs, internal company teams, or
+                business owners expanding into new markets. Every engagement is designed to move
+                participants from general interest to structured execution.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+              {[
+                {
+                  title: "One-to-one mentorship",
+                  desc: "Focused coaching for entrepreneurs building an export or import business.",
+                },
+                {
+                  title: "Team training",
+                  desc: "Structured sessions for staff handling trade documentation, procurement, and operations.",
+                },
+                {
+                  title: "Execution support",
+                  desc: "Practical follow-through on trade processes, compliance expectations, and deal readiness.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded bg-[#F2F3F6] border border-[#E8E9EB] p-5 sm:p-6"
+                >
+                  <h3 className="font-display text-[#0A1628] text-xl font-bold mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-[#64748B] text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#F2F3F6] py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="mb-10">
+            <SectionLabel text="Gallery" />
+            <h2 className="font-display text-[#0A1628] text-3xl sm:text-4xl font-bold mb-3">
+              CEO training sessions
+            </h2>
+            <p className="text-[#64748B] text-base max-w-2xl leading-relaxed">
+              A look at recent mentorship and practical training sessions led by the company
+              leadership. Media is presented in a consistent gallery format so images and future
+              training videos share the same visual treatment.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {TRAINING_MEDIA.map((item) => (
+              <div
+                key={item.title}
+                className="group text-left rounded bg-white overflow-hidden border border-[#E8E9EB] hover:border-[#0A1628]/20 transition-colors"
+              >
+                <div className="relative overflow-hidden aspect-[16/11] bg-[#E8E9EB]">
+                  {item.type === "image" ? (
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <video
+                      controls
+                      preload="metadata"
+                      poster={item.poster}
+                      className="w-full h-full object-cover"
+                    >
+                      <source src={item.src} />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                  <div className="absolute top-4 left-4 bg-[#0A1628] text-white text-xs font-semibold px-2.5 py-1 rounded-sm">
+                    {item.type === "video" ? "Video" : "Photo"}
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display text-[#0A1628] text-xl font-bold mb-1.5">
+                    {item.title}
+                  </h3>
+                  <p className="text-[#64748B] text-sm leading-relaxed">{item.alt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 items-center">
+            <div className="rounded overflow-hidden bg-[#E8E9EB] aspect-[4/3]">
+              <img
+                src={IMG.ceoPortrait}
+                alt="CEO of Export Trade Africa"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <SectionLabel text="Next Step" />
+              <h2 className="font-display text-[#0A1628] text-3xl sm:text-4xl font-bold mb-5">
+                Book a mentorship or training session
+              </h2>
+              <p className="text-[#64748B] text-base leading-relaxed mb-6 max-w-2xl">
+                Whether you need executive-level guidance, team onboarding, or a practical workshop
+                for market entry, we can structure a session around your business goals and current
+                trade readiness.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => navigate("quote")}
+                  className="bg-[#0A1628] text-white font-semibold px-7 py-3.5 rounded hover:bg-[#162840] transition-colors flex items-center gap-2 justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A]"
+                >
+                  Request a Session <ArrowRight size={16} />
+                </button>
+                <button
+                  onClick={() => navigate("services")}
+                  className="border border-[#0A1628]/15 text-[#0A1628] font-semibold px-7 py-3.5 rounded hover:bg-[#F2F3F6] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A]"
+                >
+                  Explore All Services
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
@@ -1873,6 +2224,7 @@ export default function App() {
         <ProductDetailPage product={selectedProduct} navigate={navigate} />
       )}
       {page === "services" && <ServicesPage navigate={navigate} />}
+      {page === "mentorship-training" && <MentorshipTrainingPage navigate={navigate} />}
       {page === "quote" && <QuotePage />}
       {page === "supplier" && <SupplierPage />}
       {page === "compliance" && <CompliancePage />}
