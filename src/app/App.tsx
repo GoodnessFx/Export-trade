@@ -593,8 +593,7 @@ function HomePage({ navigate }: { navigate: (p: Page, product?: ProductType) => 
               African Trade.<br />Global Reach.
             </h1>
             <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-xl">
-              Export Trade Africa connects verified Nigerian goods — agricultural commodities,
-              solid minerals, and palm products — to buyers across Europe, Asia, and the Americas.
+              Export Trade Africa connects high-quality Nigerian commodities with global markets. We supply verified agricultural goods, solid minerals, and palm products to buyers across Europe, Asia, and the Americas.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <button
@@ -642,12 +641,12 @@ function HomePage({ navigate }: { navigate: (p: Page, product?: ProductType) => 
               Our Core Services
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 icon: <Ship size={22} />,
                 title: "Export",
-                desc: "We handle the complete export process for verified Nigerian commodities — documentation, freight, customs clearance, and delivery to your port.",
+                desc: "We handle the complete export process for verified Nigerian commodities, including documentation, freight, customs clearance, and delivery to your port.",
               },
               {
                 icon: <Package size={22} />,
@@ -657,7 +656,17 @@ function HomePage({ navigate }: { navigate: (p: Page, product?: ProductType) => 
               {
                 icon: <Search size={22} />,
                 title: "Sourcing",
-                desc: "Need a specific product at volume? We source directly from vetted suppliers across Nigeria and West Africa — no unknown intermediaries.",
+                desc: "Need a specific product at volume? We source directly from vetted suppliers across Nigeria and West Africa, eliminating unknown intermediaries.",
+              },
+              {
+                icon: <Users size={22} />,
+                title: "Mentorship",
+                desc: "We provide expert guidance for emerging exporters, helping you navigate international trade regulations, contracts, and buyer relations.",
+              },
+              {
+                icon: <GraduationCap size={22} />,
+                title: "Training",
+                desc: "Practical, hands-on trade training sessions designed to equip you with the skills to successfully execute import and export transactions.",
               },
             ].map((tile) => (
               <div
