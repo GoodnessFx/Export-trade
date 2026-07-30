@@ -54,13 +54,7 @@ type ProductType = {
   specs: string;
 };
 
-type Testimonial = {
-  quote: string;
-  name: string;
-  role: string;
-  company: string;
-  country: string;
-};
+
 
 type TrainingMediaItem = {
   type: "image" | "video";
@@ -161,8 +155,7 @@ const NAV_LINKS: { label: string; page: Page }[] = [
   { label: "Contact", page: "contact" },
 ];
 
-// TODO: Replace with approved real client testimonials before publishing this section.
-const CLIENT_TESTIMONIALS: Testimonial[] = [];
+
 
 const TRAINING_MEDIA: TrainingMediaItem[] = [
   {
@@ -785,59 +778,6 @@ function HomePage({ navigate }: { navigate: (p: Page, product?: ProductType) => 
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="mb-10">
-            <SectionLabel text="Client Testimonials" />
-            <h2 className="font-display text-[#0A1628] text-3xl sm:text-4xl font-bold">
-              What buyers say
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {CLIENT_TESTIMONIALS.length > 0 ? (
-              CLIENT_TESTIMONIALS.map((t) => (
-                <div
-                  key={`${t.name}-${t.company}`}
-                  className="bg-[#F2F3F6] rounded p-8 border border-[#E8E9EB]"
-                >
-                  <div className="flex gap-0.5 mb-5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={13} className="text-[#C97B2A] fill-[#C97B2A]" />
-                    ))}
-                  </div>
-                  <blockquote className="text-[#0A1628] text-base leading-relaxed mb-6 italic">
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <div>
-                    <div className="font-semibold text-[#0A1628] text-sm">{t.name}</div>
-                    <div className="text-[#64748B] text-xs mt-0.5">
-                      {t.role}, {t.company} &middot; {t.country}
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="md:col-span-2 bg-[#F2F3F6] rounded p-8 sm:p-10 border border-[#E8E9EB]">
-                <div className="flex gap-0.5 mb-5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={13} className="text-[#C97B2A] fill-[#C97B2A]" />
-                  ))}
-                </div>
-                {/* TODO: Render approved real client testimonials here once provided. */}
-                <p className="text-[#0A1628] text-base leading-relaxed mb-3">
-                  Real client testimonials will be published here once approved quotes are
-                  supplied.
-                </p>
-                <p className="text-[#64748B] text-sm leading-relaxed">
-                  This section intentionally avoids placeholder names, companies, or fabricated
-                  endorsements.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* Closing CTA */}
       <section className="bg-[#0A1628] py-16 sm:py-20">
@@ -905,11 +845,11 @@ function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
                 </p>
               </div>
             </div>
-            <div className="rounded overflow-hidden bg-[#E8E9EB] aspect-[4/3]">
+            <div className="rounded overflow-hidden bg-white border border-[#E8E9EB] aspect-[4/3] flex items-center justify-center p-12">
               <img
-                src={IMG.businessMeeting2}
-                alt="Trade agreement and business meeting"
-                className="w-full h-full object-cover"
+                src={IMG.logo}
+                alt="Hamdan Integrated Services logo"
+                className="max-w-full max-h-full object-contain"
               />
             </div>
           </div>
@@ -917,7 +857,7 @@ function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
       </section>
 
       {/* Mission */}
-      <section className="bg-[#F2F3F6] py-14 border-y border-[#E8E9EB]">
+      <section className="bg-white py-14 border-y border-[#E8E9EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl">
             <SectionLabel text="Our Mission" />
@@ -930,50 +870,6 @@ function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="bg-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="mb-10">
-            <SectionLabel text="Leadership" />
-            <h2 className="font-display text-[#0A1628] text-3xl font-bold">
-              The people behind the company
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Adebayo Okafor",
-                role: "Managing Director",
-                bio: "Over 18 years in commodity trading and international logistics. Holds a master's degree in International Trade from the University of Lagos.",
-              },
-              {
-                name: "Chioma Eze",
-                role: "Head of Export Operations",
-                bio: "Specialist in export documentation and NEPC compliance. Previously with the Nigerian Customs Service for nine years before joining ETA in 2016.",
-              },
-              {
-                name: "James Adeyemi",
-                role: "Head of Sourcing",
-                bio: "Manages direct supplier relationships across Kano, Benue, and Cross River states for agricultural and mineral commodities.",
-              },
-            ].map((member) => (
-              <div key={member.name}>
-                <div className="bg-[#E8E9EB] rounded aspect-[3/4] overflow-hidden mb-4 flex flex-col items-center justify-center gap-2">
-                  <Users size={36} className="text-[#64748B] opacity-25" />
-                  <span className="text-xs text-[#64748B] opacity-60">
-                    Photo &mdash; {member.name}
-                  </span>
-                </div>
-                <h3 className="font-display text-[#0A1628] text-lg font-bold">{member.name}</h3>
-                <div className="text-[#C97B2A] text-xs font-semibold tracking-wide uppercase mb-2">
-                  {member.role}
-                </div>
-                <p className="text-[#64748B] text-sm leading-relaxed">{member.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Location */}
       <section className="bg-[#F2F3F6] py-16 border-t border-[#E8E9EB]">
