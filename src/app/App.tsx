@@ -133,8 +133,8 @@ const PRODUCTS: ProductType[] = [
   {
     id: "import",
     name: "Import Services",
-    image: IMG.warehouse,
-    imageAlt: "Warehouse operations for goods imported into Nigeria",
+    image: IMG.cargoShip,
+    imageAlt: "Large cargo vessel handling imported goods for Nigeria-bound trade",
     description:
       "We coordinate key stages of the import process for Nigerian businesses, including supplier sourcing, import documentation, regulatory requirements, freight, customs clearance, and delivery.",
     category: "Import",
@@ -1396,8 +1396,8 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
       ],
       ctaText: "Request Import Consultation",
       ctaPage: "contact" as Page,
-      image: IMG.warehouse,
-      imageAlt: "Warehouse operations for imported goods in Nigeria",
+      image: IMG.cargoShip,
+      imageAlt: "Large cargo vessel supporting international imports into Nigeria",
     },
     {
       icon: <Search size={26} />,
