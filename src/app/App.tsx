@@ -27,6 +27,7 @@ import {
   GraduationCap,
   BookOpen,
 } from "lucide-react";
+import { ChatWidget } from "./components/ChatWidget";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 type Page =
@@ -814,74 +815,316 @@ function HomePage({ navigate }: { navigate: (p: Page, product?: ProductType) => 
 
 // ─── ABOUT PAGE ───────────────────────────────────────────────────────────────
 function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
+  const coreElements = [
+    {
+      num: "01",
+      title: "Reliable Sourcing",
+      desc: "Identifying suitable suppliers and coordinating procurement against agreed specifications across verified farms, mines, and factories.",
+    },
+    {
+      num: "02",
+      title: "Quality Assurance",
+      desc: "Supporting appropriate inspection, sampling, laboratory testing, assay analysis, and product verification before cargo movement.",
+    },
+    {
+      num: "03",
+      title: "Trade Documentation & Compliance",
+      desc: "Coordinating applicable export and import documentation, banking forms, and regulatory clearances in line with Nigerian and destination requirements.",
+    },
+    {
+      num: "04",
+      title: "Logistics & Supply Chain Coordination",
+      desc: "Planning collection, storage, cargo consolidation, inland haulage, freight booking, port handling, and international shipment.",
+    },
+    {
+      num: "05",
+      title: "Communication & Accountability",
+      desc: "Keeping buyers, suppliers, and partners informed throughout the transaction with regular status reporting and transparent updates.",
+    },
+  ];
+
+  const whatWeDoList = [
+    {
+      icon: <Ship size={24} />,
+      title: "Agricultural Commodities & African Food Products",
+      desc: "We connect buyers with agricultural commodities and food products sourced from Nigeria and other African markets. Our product range includes cashew nuts, cocoa, sesame seeds, hibiscus flowers, charcoal, bitter kola, and a variety of African food products such as garri, yam flour, palm oil, utazi, ugwu leaves, snails, and other products based on availability and buyer requirements. We focus on agreed specifications, quality checks, appropriate packaging, sourcing coordination, and export documentation.",
+      tag: "Sourcing & Export",
+    },
+    {
+      icon: <Award size={24} />,
+      title: "Solid Minerals & Industrial Raw Materials",
+      desc: "We support sourcing and export opportunities in Nigeria’s solid minerals sector, connecting suitable supply sources with buyers seeking minerals for industrial and commercial use. Our interests include zinc, lead, tin, lithium-bearing minerals, fluorite, and other selected mineral commodities, subject to availability, applicable licensing, quality specifications, and regulatory compliance. We coordinate responsible sourcing, testing, assay verification, and statutory export permits.",
+      tag: "Industrial & Mining",
+    },
+    {
+      icon: <Package size={24} />,
+      title: "Import Services",
+      desc: "Our services extend to businesses importing goods into Nigeria. We coordinate key stages of the import process, including supplier sourcing and verification, price negotiation, import documentation, regulatory requirements, freight arrangements, customs clearance coordination, and delivery. Whether importing raw materials, machinery, equipment, or finished products, our goal is to simplify trade through clear coordination with MDAs, service providers, and digital trade channels.",
+      tag: "Trade Facilitation",
+    },
+    {
+      icon: <Warehouse size={24} />,
+      title: "Warehousing & Logistics",
+      desc: "Trade does not end when a product is purchased. Goods must be collected, handled, stored, inspected where necessary, and moved to the right destination at the right time. Through our warehousing and logistics arrangements across multiple states in Nigeria, we coordinate movement from farms, mines, and factories to warehouses, processing facilities, ports, and final destinations with inventory tracking and cargo consolidation.",
+      tag: "Storage & Freight",
+    },
+    {
+      icon: <GraduationCap size={24} />,
+      title: "Export Training & Mentorship",
+      desc: "We believe Africa’s trade potential can only grow when more people have the knowledge and practical skills to participate. We provide training and mentorship for aspiring exporters, small businesses, entrepreneurs, and established businesses looking to expand beyond domestic markets. Our learning support covers product selection, market research, buyer identification, pricing, export documentation, regulatory compliance, and international trade procedures.",
+      tag: "Capacity Building",
+    },
+  ];
+
   return (
     <main className="pt-16">
-      <PageHero
-        label="About Us"
-        title="About Export Trade Africa"
-        image={IMG.ceoPortrait}
-        imageAlt="Export Trade Africa leadership team"
-      />
+      {/* ── Executive About Hero: Portrait Engineered so face is 100% visible on mobile and desktop ── */}
+      <section className="relative bg-[#0A1628] text-white pt-10 pb-14 sm:py-20 overflow-hidden border-b border-white/10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#162840] via-[#0A1628] to-[#0A1628] opacity-90" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-      {/* Story */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left Column: Mission & Identity */}
+            <div className="lg:col-span-7 space-y-5">
+              <SectionLabel text="About Us · Leadership & Mission" />
+              <h1 className="font-display text-white text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                Connecting Africa’s Products to Global Markets
+              </h1>
+              <p className="text-[#C97B2A] text-base sm:text-lg font-semibold">
+                Export Trade Africa (ETA) · Established in Lagos, Nigeria
+              </p>
+              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                Export Trade Africa (ETA) is an African trade and supply chain company established in Lagos, Nigeria, with a clear mission: to make it easier for businesses around the world to source quality products from Africa and for African businesses to participate confidently in international trade.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {[
+                  "Agricultural Commodities",
+                  "Solid Minerals",
+                  "Import Services",
+                  "Warehousing & Logistics",
+                  "Export Training & Mentorship",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/90 border border-white/15"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <div className="pt-2 flex flex-wrap gap-3">
+                <button
+                  onClick={() => navigate("quote")}
+                  className="bg-[#C97B2A] hover:bg-[#b06820] text-white font-semibold px-6 py-3 rounded transition-colors flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+                >
+                  Request a Quote <ArrowRight size={14} />
+                </button>
+                <button
+                  onClick={() => navigate("services")}
+                  className="border border-white/30 text-white font-semibold px-6 py-3 rounded hover:bg-white/10 transition-colors"
+                >
+                  Explore Services
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column: Founder & Leadership Portrait (face NEVER cut off, full view on mobile & desktop) */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
+              <div className="w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[380px] bg-gradient-to-b from-[#1E3352] to-[#0A1628] rounded-2xl p-2.5 sm:p-3 border-2 border-white/15 shadow-2xl ring-1 ring-white/10">
+                <div className="rounded-xl overflow-hidden bg-[#0A1628] flex items-center justify-center">
+                  <img
+                    src={IMG.ceoPortrait}
+                    alt="Founder and Leadership of Export Trade Africa"
+                    className="w-full h-auto max-h-[460px] sm:max-h-[500px] object-contain sm:object-cover sm:object-top transition-transform duration-500 hover:scale-102"
+                  />
+                </div>
+                <div className="pt-3 pb-1 text-center">
+                  <div className="text-white text-sm sm:text-base font-bold">
+                    Export Trade Africa Leadership
+                  </div>
+                  <div className="text-[#C97B2A] text-xs font-medium">
+                    Certified in International Trade & Logistics
+                  </div>
+                  <div className="text-white/60 text-[11px] mt-0.5">
+                    Lagos, Nigeria · Operating across Africa
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Practical Background & Experience ── */}
       <section className="bg-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <SectionLabel text="About Us" />
+              <SectionLabel text="Our Foundation" />
               <h2 className="font-display text-[#0A1628] text-3xl font-bold mb-6">
-                Connecting Africa's Products to Global Markets
+                Built on Practical Trade Experience & Professional Certifications
               </h2>
-              <div className="space-y-4 text-[#64748B] text-sm leading-relaxed">
+              <div className="space-y-4 text-[#64748B] text-sm sm:text-base leading-relaxed">
                 <p>
-                  Export Trade Africa (ETA) is an African trade and supply chain company established
-                  in Lagos, Nigeria, with a clear mission: to make it easier for businesses around
-                  the world to source quality products from Africa, and for African businesses to
-                  participate confidently in international trade.
+                  Built on practical experience in Nigerian commodity markets and international trade, supported by professional certifications in international trade and logistics, we understand the challenges that buyers and exporters face.
                 </p>
                 <p>
-                  Built on practical experience in Nigerian commodity markets and international trade,
-                  supported by professional certifications in international trade and logistics, we
-                  understand the challenges that buyers and exporters face. Finding reliable suppliers,
-                  verifying product quality, meeting regulatory requirements, preparing accurate
-                  documentation, and arranging timely delivery can be complex. We bring these moving
-                  parts together to make trade more accessible, organised, and dependable.
+                  Finding reliable suppliers, verifying product quality, meeting regulatory requirements, preparing accurate documentation, and arranging timely delivery can be complex. We bring these moving parts together to make trade more accessible, organised, and dependable.
                 </p>
                 <p>
-                  Today, our activities span agricultural commodities, African food products, solid
-                  minerals, import services, warehousing, and logistics coordination. Beyond moving
-                  goods across borders, we are committed to helping more African businesses understand,
-                  enter, and grow in international markets.
+                  Today, our activities span agricultural commodities, African food products, solid minerals, import services, warehousing, and logistics coordination. Beyond moving goods across borders, we are committed to helping more African businesses understand, enter, and grow in international markets.
                 </p>
               </div>
             </div>
-            <div className="rounded overflow-hidden bg-white border border-[#E8E9EB] aspect-[4/3] flex items-center justify-center p-6">
+            <div className="rounded-2xl overflow-hidden bg-white border border-[#E8E9EB] p-8 sm:p-12 flex flex-col items-center justify-center shadow-sm">
               <img
                 src={IMG.logo}
                 alt="Export Trade Africa logo"
-                className="max-w-full max-h-full object-contain"
+                className="max-w-xs sm:max-w-sm max-h-48 object-contain mb-6"
               />
+              <div className="text-center border-t border-[#E8E9EB] pt-6 w-full">
+                <div className="font-display text-[#0A1628] font-bold text-lg mb-1">
+                  Export Trade Africa
+                </div>
+                <div className="text-[#C97B2A] text-xs font-semibold uppercase tracking-wider">
+                  Sourcing Africa · Connecting Markets · Empowering Exporters
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission */}
-      <section className="bg-white py-14 border-y border-[#E8E9EB]">
+      {/* ── What We Do (5 Core Pillars from Founder) ── */}
+      <section className="bg-[#F8FAFC] py-16 sm:py-20 border-y border-[#E8E9EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-3xl">
-            <SectionLabel text="Our Vision" />
-            <p className="font-display text-[#0A1628] text-2xl sm:text-3xl font-bold leading-snug">
-              &ldquo;We see Africa as more than a source of raw materials. We see a continent with
-              the resources, agricultural potential, food culture, entrepreneurial talent, and
-              industrial opportunities to serve markets around the world.&rdquo;
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <SectionLabel text="What We Do" />
+            <h2 className="font-display text-[#0A1628] text-3xl sm:text-4xl font-bold mb-4">
+              Comprehensive Trade & Supply Chain Solutions
+            </h2>
+            <p className="text-[#64748B] text-base leading-relaxed">
+              From Nigerian commodity sourcing and mineral verification to import coordination, warehousing across states, and exporter mentorship.
             </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {whatWeDoList.map((item, idx) => (
+              <div
+                key={item.title}
+                className={`bg-white rounded-xl border border-[#E8E9EB] p-6 sm:p-7 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between ${
+                  idx === 4 ? "md:col-span-2 lg:col-span-1" : ""
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-11 h-11 rounded-lg bg-[#0A1628] text-[#C97B2A] flex items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <span className="text-[11px] font-semibold text-[#C97B2A] bg-[#C97B2A]/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-[#0A1628] text-lg font-bold mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-[#64748B] text-sm leading-relaxed mb-6">
+                    {item.desc}
+                  </p>
+                </div>
+                <button
+                  onClick={() => navigate(idx === 4 ? "mentorship-training" : "services")}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A1628] hover:text-[#C97B2A] transition-colors"
+                >
+                  Learn more <ChevronRight size={13} />
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* ── How We Work: The 5 Important Elements ── */}
+      <section className="bg-white py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-3xl mb-12">
+            <SectionLabel text="How We Work" />
+            <h2 className="font-display text-[#0A1628] text-3xl sm:text-4xl font-bold mb-4">
+              Our 5-Element Trade Methodology
+            </h2>
+            <p className="text-[#64748B] text-base leading-relaxed">
+              We believe successful international trade begins long before goods reach a port. It starts with understanding buyer needs, identifying suitable supply sources, agreeing on quality and commercial terms, and planning the movement of goods from origin to destination. Every transaction is tailored to the product, quantity, destination, delivery terms, and specific requirements.
+            </p>
+          </div>
 
-      {/* Location */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {coreElements.map((elem) => (
+              <div
+                key={elem.num}
+                className="bg-[#F8FAFC] border border-[#E8E9EB] rounded-xl p-5 hover:border-[#C97B2A] transition-colors"
+              >
+                <div className="text-2xl font-black text-[#C97B2A] font-display mb-2">
+                  {elem.num}
+                </div>
+                <h3 className="text-[#0A1628] font-bold text-sm mb-2">
+                  {elem.title}
+                </h3>
+                <p className="text-[#64748B] text-xs leading-relaxed">
+                  {elem.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Vision for African Trade ── */}
+      <section className="bg-[#0A1628] text-white py-16 sm:py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <SectionLabel text="Our Vision for African Trade" />
+            <blockquote className="font-display text-white text-2xl sm:text-3xl lg:text-4xl font-bold leading-snug mb-8">
+              &ldquo;We see Africa as more than a source of raw materials. We see a continent with the resources, agricultural potential, food culture, entrepreneurial talent, and industrial opportunities to serve markets around the world.&rdquo;
+            </blockquote>
+            <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
+              Our ambition is to help bridge the gap between African suppliers and international buyers while supporting African entrepreneurs and businesses to develop the knowledge, systems, and relationships needed to compete globally. By combining trade facilitation, sourcing, logistics coordination, and exporter development, we aim to contribute to a more connected, capable, and competitive African trading community.
+            </p>
+            <div className="inline-block bg-[#C97B2A] text-white text-xs font-semibold px-4 py-2 rounded-full uppercase tracking-wider">
+              Export Trade Africa — Sourcing Africa. Connecting Markets. Empowering Exporters.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Let's Build Trade Opportunities Together (CTA) ── */}
+      <section className="bg-[#C97B2A] text-white py-14 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
+            Let's Build Trade Opportunities Together
+          </h2>
+          <p className="text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto mb-8">
+            Whether you are an international buyer looking for reliable African products, a Nigerian business seeking import support, a supplier looking for access to new markets, or an aspiring exporter ready to take the next step, Export Trade Africa welcomes the opportunity to work with you.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => navigate("quote")}
+              className="bg-[#0A1628] hover:bg-[#162840] text-white font-semibold px-8 py-3.5 rounded shadow-lg transition-colors flex items-center gap-2"
+            >
+              Request a Quote <ArrowRight size={14} />
+            </button>
+            <button
+              onClick={() => navigate("contact")}
+              className="bg-white hover:bg-white/90 text-[#0A1628] font-semibold px-8 py-3.5 rounded shadow-lg transition-colors"
+            >
+              Contact Our Lagos Team
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Where We Operate ── */}
       <section className="bg-[#F2F3F6] py-16 border-t border-[#E8E9EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -890,15 +1133,10 @@ function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
               <h2 className="font-display text-[#0A1628] text-3xl font-bold mb-5">Lagos, Nigeria</h2>
               <div className="space-y-4 text-[#64748B] text-sm leading-relaxed mb-6">
                 <p>
-                  Export Trade Africa is established in Lagos, Nigeria — a major hub for trade,
-                  logistics, and commerce in West Africa, with access to Nigeria's key ports and
-                  freight corridors.
+                  Export Trade Africa is established in Lagos, Nigeria — a major hub for trade, logistics, and commerce in West Africa, with direct access to Nigeria's key seaports (Apapa and Tin Can Island) and major freight corridors.
                 </p>
                 <p>
-                  Our activities span agricultural commodities, African food products, solid minerals,
-                  import services, warehousing, and logistics coordination. We work with farmers,
-                  producers, processors, and suppliers across Nigeria and Africa to connect products
-                  with buyers and markets around the world.
+                  Our activities span agricultural commodities, African food products, solid minerals, import services, warehousing, and logistics coordination. We work with farmers, producers, processors, and suppliers across Nigeria and Africa to connect products with buyers and markets around the world.
                 </p>
               </div>
               <div className="space-y-3">
@@ -916,7 +1154,7 @@ function AboutPage({ navigate }: { navigate: (p: Page) => void }) {
                 </div>
               </div>
             </div>
-            <div className="bg-[#E8E9EB] rounded overflow-hidden h-72">
+            <div className="bg-[#E8E9EB] rounded-xl overflow-hidden h-72 shadow-sm border border-[#E8E9EB]">
               <iframe
                 title="Export Trade Africa office location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.7558!2d3.5098!3d6.4281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjUnNDEuMiJOIDPCsDMwJzM1LjMiRQ!5e0!3m2!1sen!2sng!4v1680000000000!5m2!1sen!2sng"
@@ -1101,87 +1339,149 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
     {
       icon: <Ship size={26} />,
       title: "Export Services",
-      who: "For international buyers sourcing goods from Nigeria and Africa.",
-      desc: "We make exporting from Nigeria easier by helping international buyers source quality products and coordinating the export process from start to finish — from product enquiry to shipment and documentation.",
-      steps: [
-        "Product enquiry and sourcing — tell us what you need, the quantity, destination, and requirements",
-        "Samples and quality specifications — agreed product grades, standards, packaging, and requirements",
-        "Quotation and proforma invoice outlining price, payment terms, and delivery arrangements",
-        "Order confirmation and payment — purchase order or sales contract with agreed Incoterms",
-        "Product preparation, quality inspection, laboratory testing, and quality certification",
-        "Export documentation: Form NXP, Certificate of Origin, Phytosanitary Certificate, relevant permits",
-        "Freight booking, port handling, customs clearance, and Bill of Lading coordination",
-        "Final document package and shipment updates dispatched to buyer",
+      subtitle: "Your Trusted Partner for Exporting from Nigeria to the World",
+      who: "For international buyers sourcing goods from Nigeria and Africa",
+      desc: "At Export Trade Africa, we make exporting from Nigeria easier by helping international buyers source quality products and coordinating the export process from start to finish. Whether you are sourcing agricultural commodities (such as cashew nuts, ginger, cocoa, hibiscus flowers, chilli peppers, charcoal, and sesame seeds) or solid minerals (such as tin, zinc, lead, copper, and lithium-bearing minerals), we connect your business with suitable Nigerian supply sources and coordinate every step needed for international shipment.",
+      whyChoose: [
+        "End-to-end export coordination from enquiry to final dispatch",
+        "Diverse product categories: agricultural commodities and solid minerals",
+        "Quality-focused approach with agreed specifications and lab testing",
+        "Full compliance support: Form NXP, Phytosanitary, Certificate of Origin",
+        "Clear communication and regular shipment tracking updates",
+        "Professional expertise in international trade and logistics",
       ],
+      steps: [
+        "Product Enquiry and Sourcing: Tell us what you need, the quantity, destination country, and specific requirements. We assess availability and coordinate sourcing.",
+        "Samples and Quality Specifications: Where applicable, we arrange samples for evaluation and agree on grades, standards, packaging, and order terms.",
+        "Quotation and Proforma Invoice: We provide transparent pricing, payment terms, delivery arrangements, and Incoterms outlined in a proforma invoice.",
+        "Order Confirmation and Payment: Transaction documented through a purchase order or sales contract with agreed payment structures.",
+        "Product Preparation and Quality Inspection: Collection, sorting, grading, processing, and packaging. Independent lab testing and quality certification coordinated.",
+        "Export Documentation and Compliance: Form NXP, Certificate of Origin, Phytosanitary Certificate, Commercial Invoice, Packing List, and mineral export permits.",
+        "Freight Booking and Customs Clearance: Coordinated with freight forwarders, shipping lines, and clearing agents for shipping bookings, port handling, and customs.",
+        "Shipment and Transport Documentation: Verification and issuance of the Bill of Lading or applicable transport documents once loaded.",
+        "Final Document Dispatch and Shipment Updates: Complete export document package dispatched to the buyer with tracking updates until destination arrival.",
+      ],
+      ctaText: "Request an Export Quote",
+      ctaPage: "quote" as Page,
       image: IMG.cargoShip,
       imageAlt: "Cargo ship carrying Nigerian exports at sea",
     },
     {
       icon: <Package size={26} />,
       title: "Import Services",
-      who: "For Nigerian businesses importing goods from international suppliers.",
-      desc: "Importing goods into Nigeria involves more than finding the right supplier. We help Nigerian businesses navigate the import process with greater confidence — coordinating supplier sourcing and verification, documentation, regulatory approvals, customs clearance, and final delivery.",
-      steps: [
-        "Understanding your requirements — product, quantity, specifications, budget, and delivery timeline",
-        "Supplier verification and price negotiation — assessing suppliers and agreeing commercial terms",
-        "Order confirmation, purchase order, and payment arrangement coordination",
-        "Form M and pre-import documentation preparation with relevant banks and service providers",
-        "Regulatory approvals and National Single Window support where applicable",
-        "Supplier follow-up on production, packaging, pre-shipment inspection, and shipping readiness",
-        "Freight forwarding and international transportation coordination",
-        "Customs documentation, assessment, examination, duty payment, and cargo release",
-        "Port release, haulage, and delivery to your warehouse, factory, or business premises",
+      subtitle: "Your Trusted Partner for Importing Goods into Nigeria",
+      who: "For Nigerian businesses importing commercial goods, machinery, and raw materials",
+      desc: "Importing goods into Nigeria involves more than finding the right supplier. From verifying suppliers and negotiating prices to managing documentation, regulatory approvals, customs clearance, and final delivery, every stage requires careful coordination. We coordinate key stages from sourcing and supplier engagement to customs clearance and delivery to your doorstep.",
+      whyChoose: [
+        "End-to-end import coordination from international supplier to doorstep",
+        "Supplier verification, credential review, and price negotiation",
+        "Form M, SON, and NAFDAC regulatory documentation and approvals",
+        "National Single Window (NSW) digital trade facilitation support",
+        "MDA engagement and trade stakeholder coordination through official channels",
+        "Freight forwarding (sea and air) and licensed customs clearance",
       ],
+      note: "National Single Window support applies where relevant digital services are available. MDA relationships represent coordination and facilitation through appropriate official channels.",
+      steps: [
+        "Understanding Your Requirements and Sourcing: Clarifying product specs, quantity, budget, and delivery timelines to shortlist reliable international suppliers.",
+        "Supplier Verification and Price Negotiation: Assessing supplier credentials, reviewing production capacity, and negotiating competitive commercial terms.",
+        "Order Confirmation and Payment Arrangements: Sales contract coordination and banking arrangements for foreign exchange processing in line with FX regulations.",
+        "Form M and Pre-Import Documentation: Preparation of Form M with authorised dealer banks, alongside SON, NAFDAC, and relevant agency permits.",
+        "Regulatory Approvals & National Single Window Support: Coordinating electronic trade submissions through Nigeria’s National Single Window and relevant MDAs.",
+        "Supplier Production, Inspection, and Shipping Readiness: Monitoring production, packaging, and coordinating pre-shipment inspections and certifications.",
+        "Freight Forwarding and International Transportation: Coordinating sea or air freight, cargo booking, and tracking until arrival at Nigerian ports.",
+        "Cargo Arrival and Customs Documentation: Reviewing Bill of Lading / Air Waybill, Commercial Invoice, Packing List, Form M, and customs declarations.",
+        "Customs Assessment, Examination, and Duty Payment: Facilitating cargo examination and duty payment with licensed agents and Nigeria Customs Service.",
+        "Port Release, Haulage, and Final Delivery: Evacuation from port terminals and transportation directly to your warehouse, factory, or bonded warehouse.",
+        "Delivery Confirmation and Document Handover: Final receipt confirmation and complete handover of import records for your accounting and audit.",
+      ],
+      ctaText: "Request Import Consultation",
+      ctaPage: "contact" as Page,
       image: IMG.warehouse,
       imageAlt: "Warehouse operations for imported goods in Nigeria",
     },
     {
       icon: <Search size={26} />,
-      title: "Sourcing & Supply Chain",
-      who: "For buyers who need products sourced and coordinated from origin to destination.",
-      desc: "We help source products from trusted supply networks across Nigeria and Africa. Our strength lies in bringing together procurement expertise, quality control, and logistics planning to move products efficiently from the farm gate, mine, or factory to the warehouse or port of shipment.",
-      steps: [
-        "Understanding your requirements — product specifications, quantity, quality grade, packaging, and target price",
-        "Supplier identification and qualification using our network across Nigeria and Africa",
-        "Procurement and price negotiation — confirming availability and agreeing commercial terms",
-        "Sampling, quality control, and inspection at appropriate stages from supplier to pre-shipment",
-        "Farm-gate, mine-site, or factory collection with planned loading and handling arrangements",
-        "Logistics planning, supply consolidation, warehousing, and inventory coordination",
-        "Shipment preparation, cargo readiness coordination, and delivery to freight forwarder or port",
+      title: "Local Sourcing, Global Markets",
+      subtitle: "We Find the Right Products. We Manage the Journey.",
+      who: "For buyers needing dependable agricultural and mineral procurement in Africa",
+      desc: "Finding a reliable supplier is only the beginning. Getting the right product at the right price and quality in the required quantity takes experience and planning. We help buyers source products from trusted supply networks across Nigeria and Africa — bringing procurement expertise, quality control, and logistics planning together from the farm gate, mine, or factory to warehouse and port.",
+      whyChoose: [
+        "Established sourcing networks across Nigeria and African markets",
+        "Quality-focused procurement: clear specifications, sampling, and assay checks",
+        "Competitive purchasing considering total supply chain cost",
+        "Farm-gate, mine-site, and factory pickup with planned handling",
+        "Shipment-ready supply aligned with freight schedules and documentation",
+        "Flexible service options: sourcing alone or integrated supply chain",
       ],
+      steps: [
+        "Understanding Your Requirements: Product specifications, volume, quality grade, packaging, target price, and delivery schedule.",
+        "Supplier Identification and Qualification: Assessing supplier credentials, consistency, and track record across Nigeria and Africa.",
+        "Procurement and Price Negotiation: Confirming availability and negotiating competitive prices factoring in total landed costs.",
+        "Sampling, Quality Control, and Inspection: Arranging samples, laboratory testing, and assay verification at origin or pre-shipment.",
+        "Farm-Gate, Mine-Site, or Factory Collection: Gathering produce from farms, consolidation across producers, or collection from mines.",
+        "Logistics Planning and Supply Consolidation: Route planning, transport scheduling, handling, and temporary warehousing.",
+        "Warehousing, Inventory, and Shipment Preparation: Receipt verification, sorting, grading, repackaging, and alignment with export schedules.",
+        "Final Delivery or Export Shipment: Delivery to nominated facilities or end-to-end handover to shipping lines and port terminals.",
+        "Supply Chain Follow-Up and Reporting: Regular visibility reports on procurement status, collected quantities, and transit updates.",
+      ],
+      ctaText: "Start Sourcing Enquiry",
+      ctaPage: "quote" as Page,
       image: IMG.beans,
       imageAlt: "Agricultural commodity sourcing — cashew, cocoa and sesame from Nigeria",
     },
     {
       icon: <Warehouse size={26} />,
       title: "Warehousing & Logistics",
-      who: "For businesses needing storage, cargo handling, and coordinated transportation.",
-      desc: "We provide warehousing and logistics coordination to help businesses store, manage, handle, and move their goods efficiently — with warehouse access across multiple states in Nigeria. Our approach connects storage with procurement, quality control, transportation, and export logistics.",
-      steps: [
-        "Goods receipt and inventory registration with verification of quantities and documentation",
-        "Quality inspection and condition reporting on goods arrival",
-        "Secure storage and product handling based on nature of goods, volume, and agreed conditions",
-        "Inventory management, stock visibility, and periodic reporting",
-        "Order processing, picking, consolidation, and shipment preparation",
-        "Inland transportation and distribution — supplier locations, warehouses, ports, and delivery points",
-        "Export cargo preparation, port delivery, and coordination with freight forwarders and shipping agents",
+      subtitle: "Reliable Storage. Smarter Logistics. Seamless Movement of Goods.",
+      who: "For businesses needing multi-state storage, cargo consolidation, and haulage in Nigeria",
+      desc: "At Export Trade Africa, we provide warehousing and logistics coordination to help businesses store, manage, handle, and move their goods efficiently. With warehouse access across multiple states in Nigeria, we help clients position products closer to suppliers, production centres, major markets, and transportation corridors.",
+      whyChoose: [
+        "Connected supply chain: storage integrated with procurement and export shipping",
+        "Multi-location warehousing across commercial hubs in Nigeria",
+        "Real-time inventory visibility and agreed periodic stock reports",
+        "Cargo consolidation from multiple suppliers to optimize transport costs",
+        "Export cargo preparation aligned with shipping line cutoff dates",
+        "Doorstep haulage to factories, distribution centres, and port terminals",
       ],
+      steps: [
+        "Goods Receipt and Inventory Registration: Quantity verification, packaging checks, weights, and documentation logged in inventory systems.",
+        "Quality Inspection and Condition Reporting: Checking arrival condition, noting discrepancies, and coordinating testing where required.",
+        "Secure Storage and Product Handling: Short-term or long-term storage, segregation, palletisation, and specialized handling.",
+        "Inventory Management and Stock Visibility: Stock movement tracking and regular reporting on balances and dispatches.",
+        "Order Processing, Picking, and Consolidation: Multi-supplier cargo consolidation, sorting, labelling, and dispatch preparation.",
+        "Inland Transportation and Distribution: Coordinated transport between suppliers, warehouses, ports, and customer premises.",
+        "Export Cargo Preparation and Port Delivery: Packing, labelling, export document alignment, and scheduled delivery to seaport terminals.",
+        "Dispatch, Delivery Confirmation, and Reporting: Dispatch coordination, receipt confirmation, and updated inventory reporting.",
+      ],
+      ctaText: "Request Warehousing Quote",
+      ctaPage: "quote" as Page,
       image: IMG.cargoShip2,
       imageAlt: "Freight logistics and warehousing operations",
     },
     {
       icon: <GraduationCap size={26} />,
       title: "Export Training & Mentorship",
-      who: "For aspiring exporters, entrepreneurs, and businesses entering international trade.",
-      desc: "We believe Africa's trade potential can only grow when more people have the knowledge and practical skills to participate. We provide training and mentorship for aspiring exporters, small businesses, entrepreneurs, and established businesses looking to expand beyond their domestic markets.",
-      steps: [
-        "Practical trade sessions covering product selection, market research, and buyer identification",
-        "Export documentation, regulatory compliance, and logistics training",
-        "Pricing, negotiation, and international trade procedures guidance",
-        "One-to-one mentorship for entrepreneurs building an export or import business",
-        "Team training for staff handling trade documentation, procurement, and operations",
-        "Execution support — practical follow-through on trade processes and deal readiness",
+      subtitle: "Empowering Exporters & Building Practical International Trade Capability",
+      who: "For aspiring exporters, entrepreneurs, and businesses entering international trade",
+      desc: "At Export Trade Africa, we believe Africa’s trade potential can only grow when more people have the knowledge and practical skills to participate. We provide training and mentorship for aspiring exporters, small businesses, entrepreneurs, and established businesses looking to expand beyond their domestic markets.",
+      whyChoose: [
+        "Practical trade reality over theoretical concepts",
+        "Led by certified trade and logistics professionals",
+        "Covers buyer identification, contract negotiation, and Incoterms",
+        "Step-by-step guidance on Nigerian regulatory compliance & Form NXP",
+        "One-on-one mentorship tailored to individual business goals",
+        "Corporate team coaching for export/import desk setup",
       ],
+      steps: [
+        "Product selection, market research, and identifying genuine international buyers",
+        "Export pricing, costing structures, currency handling, and Incoterms",
+        "Export documentation: Form NXP, Certificate of Origin, Phytosanitary, and bills of lading",
+        "Regulatory compliance and quality standards across target destination markets",
+        "Logistics coordination, freight forwarding, and risk mitigation",
+        "One-on-one mentorship and corporate team training for sustainable export operations",
+      ],
+      ctaText: "Explore Mentorship & Training",
+      ctaPage: "mentorship-training" as Page,
       image: IMG.ceoConference,
       imageAlt: "CEO leading an export trade training and mentorship session",
     },
@@ -1209,22 +1509,53 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
                 }`}
               >
                 <div className={i % 2 === 1 ? "lg:col-start-2" : ""}>
-                  <div className="text-[#C97B2A] mb-4">{service.icon}</div>
-                  <h2 className="font-display text-[#0A1628] text-3xl font-bold mb-1.5">
+                  <div className="text-[#C97B2A] mb-3">{service.icon}</div>
+                  <h2 className="font-display text-[#0A1628] text-2xl sm:text-3xl font-bold mb-1.5">
                     {service.title}
                   </h2>
-                  <div className="text-[#C97B2A] text-xs font-semibold tracking-wide uppercase mb-4">
+                  <div className="text-[#C97B2A] text-xs font-semibold tracking-wide uppercase mb-3">
+                    {service.subtitle}
+                  </div>
+                  <div className="text-[#64748B] text-xs font-medium mb-4 italic">
                     {service.who}
                   </div>
-                  <p className="text-[#64748B] text-base leading-relaxed mb-8">{service.desc}</p>
+                  <p className="text-[#64748B] text-sm sm:text-base leading-relaxed mb-6">
+                    {service.desc}
+                  </p>
+
+                  {/* Why Choose Points */}
+                  {service.whyChoose && (
+                    <div className="mb-6 bg-[#F8FAFC] border border-[#E8E9EB] rounded-lg p-4">
+                      <div className="text-xs font-bold text-[#0A1628] uppercase tracking-wide mb-2.5">
+                        Key Advantages
+                      </div>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#64748B]">
+                        {service.whyChoose.map((pt, pIdx) => (
+                          <li key={pIdx} className="flex items-start gap-1.5">
+                            <span className="text-[#C97B2A] font-bold mt-0.5">•</span>
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Note Callout */}
+                  {service.note && (
+                    <div className="mb-6 p-3 bg-amber-50 border border-amber-200 rounded text-xs text-amber-900 leading-relaxed">
+                      <strong>Practical Note:</strong> {service.note}
+                    </div>
+                  )}
+
+                  {/* Numbered Process */}
                   <div>
-                    <div className="text-xs font-semibold text-[#0A1628] uppercase tracking-wide mb-4">
-                      How it works
+                    <div className="text-xs font-bold text-[#0A1628] uppercase tracking-wide mb-4">
+                      How It Works · Step-by-Step
                     </div>
                     <ol className="space-y-3">
                       {service.steps.map((step, j) => (
-                        <li key={j} className="flex gap-3 text-sm text-[#64748B]">
-                          <span className="shrink-0 w-5 h-5 rounded-full bg-[#0A1628] text-white text-xs flex items-center justify-center font-semibold mt-0.5">
+                        <li key={j} className="flex gap-3 text-xs sm:text-sm text-[#64748B]">
+                          <span className="shrink-0 w-5 h-5 rounded-full bg-[#0A1628] text-white text-[11px] flex items-center justify-center font-bold mt-0.5">
                             {j + 1}
                           </span>
                           <span className="leading-relaxed">{step}</span>
@@ -1232,15 +1563,17 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
                       ))}
                     </ol>
                   </div>
+
                   <button
-                    onClick={() => navigate("quote")}
+                    onClick={() => navigate(service.ctaPage)}
                     className="mt-8 bg-[#0A1628] text-white font-semibold px-6 py-3 rounded hover:bg-[#162840] transition-colors flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C97B2A]"
                   >
-                    Request this service <ArrowRight size={14} />
+                    {service.ctaText} <ArrowRight size={14} />
                   </button>
                 </div>
+
                 <div
-                  className={`rounded overflow-hidden bg-[#E8E9EB] aspect-[4/3] ${
+                  className={`rounded-2xl overflow-hidden bg-[#E8E9EB] aspect-[4/3] shadow-sm border border-[#E8E9EB] ${
                     i % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
                   }`}
                 >
@@ -1380,11 +1713,11 @@ function MentorshipTrainingPage({ navigate }: { navigate: (p: Page) => void }) {
       <section className="bg-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 items-center">
-            <div className="rounded overflow-hidden bg-[#E8E9EB] aspect-[4/3]">
+            <div className="rounded-2xl overflow-hidden bg-[#0A1628] aspect-[4/3] sm:aspect-[4/5] max-h-[460px] border border-[#E8E9EB] shadow-md flex items-center justify-center">
               <img
                 src={IMG.ceoPortrait}
-                alt="CEO of Export Trade Africa"
-                className="w-full h-full object-cover"
+                alt="CEO and Founder of Export Trade Africa"
+                className="w-full h-full object-contain sm:object-cover sm:object-top"
               />
             </div>
             <div>
@@ -2109,6 +2442,7 @@ export default function App() {
       {page === "compliance" && <CompliancePage />}
       {page === "contact" && <ContactPage />}
       <Footer navigate={navigate} />
+      <ChatWidget navigate={navigate} />
     </div>
   );
 }
