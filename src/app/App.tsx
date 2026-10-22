@@ -69,9 +69,10 @@ type TrainingMediaItem = {
 const IMG = {
   hero: "https://images.unsplash.com/photo-1713388259485-5fb8454d16cf?w=1800&h=900&fit=crop&auto=format",
   containers: "https://images.unsplash.com/photo-1519213887655-a4f199e3015b?w=1400&h=800&fit=crop&auto=format",
-  cargoShip: "https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?w=1200&h=700&fit=crop&auto=format",
+  cargoShip: "https://images.unsplash.com/photo-1585713181935-d5f622cc2415?w=1200&h=700&fit=crop&auto=format",
   cargoShip2: "https://images.unsplash.com/photo-1585713181935-d5f622cc2415?w=1200&h=700&fit=crop&auto=format",
-  warehouse: "https://images.unsplash.com/photo-1551356522-1237fe9fdb26?w=900&h=600&fit=crop&auto=format",
+  warehouse: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=700&fit=crop&auto=format",
+  logisticsTruck: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&h=700&fit=crop&auto=format",
   beans: "https://images.unsplash.com/photo-1493925410384-84f842e616fb?w=700&h=700&fit=crop&auto=format",
   seeds: "https://images.unsplash.com/photo-1507576164121-220762647800?w=700&h=700&fit=crop&auto=format",
   stones: "https://images.unsplash.com/photo-1545567724-9b16e57c906d?w=700&h=700&fit=crop&auto=format",
@@ -1455,8 +1456,10 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
       ],
       ctaText: "Request Warehousing Quote",
       ctaPage: "quote" as Page,
-      image: IMG.cargoShip2,
-      imageAlt: "Freight logistics and warehousing operations",
+      image: IMG.warehouse,
+      imageAlt: "Warehouse storage and inventory handling",
+      secondaryImage: IMG.logisticsTruck,
+      secondaryImageAlt: "Freight truck transporting goods for logistics",
     },
     {
       icon: <GraduationCap size={26} />,
@@ -1577,11 +1580,26 @@ function ServicesPage({ navigate }: { navigate: (p: Page) => void }) {
                     i % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
                   }`}
                 >
-                  <img
-                    src={service.image}
-                    alt={service.imageAlt}
-                    className="w-full h-full object-cover"
-                  />
+                  {service.secondaryImage ? (
+                    <div className="grid h-full grid-cols-2 gap-1">
+                      <img
+                        src={service.image}
+                        alt={service.imageAlt}
+                        className="w-full h-full object-cover"
+                      />
+                      <img
+                        src={service.secondaryImage}
+                        alt={service.secondaryImageAlt}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={service.image}
+                      alt={service.imageAlt}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                 </div>
               </div>
             </div>
